@@ -3,12 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 const useGlobalNavigate = () => {
 	const navigate = useNavigate();
-	const navigateTo = useCallback(
-		(path) => {
-			navigate(path);
-		},
-		[navigate]
-	);
+	const navigateTo = useCallback((path) => navigate(path), [navigate]);
+
 	return navigateTo;
 };
 

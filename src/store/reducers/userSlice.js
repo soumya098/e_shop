@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../../api';
+import { navigateTo } from '../../common/Navigation';
 
 const initialState = {
 	roles: [],
@@ -45,6 +46,8 @@ const userSlice = createSlice({
 				error: null,
 				roles: []
 			});
+
+			navigateTo('/');
 		}
 	},
 	extraReducers: (builder) => {
@@ -63,6 +66,7 @@ const userSlice = createSlice({
 				});
 				console.log(state);
 				localStorage.setItem('token', payload.token);
+				navigateTo('/');
 			})
 			.addCase(loginUser.rejected, (state, { payload }) => {
 				state.loading = false;

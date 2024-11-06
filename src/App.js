@@ -6,22 +6,24 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import RequireAuth from './RequireAuth';
 import AddProduct from './components/product/AddProduct';
+import { NavigationProvider } from './common/Navigation';
 
 function App() {
 	return (
 		<BrowserRouter>
-			<Grid container direction='column'>
-				<NavBar />
-
-				<Routes>
-					<Route exact path='/login' element={<Login />} />
-					<Route exact path='/signup' element={<Signup />} />
-					<Route element={<RequireAuth />}>
-						<Route exact path='/' element={<Home />} />
-						<Route exact path='/addProduct' element={<AddProduct />} />
-					</Route>
-				</Routes>
-			</Grid>
+			<NavigationProvider>
+				<Grid container direction='column'>
+					<NavBar />
+					<Routes>
+						<Route exact path='/login' element={<Login />} />
+						<Route exact path='/signup' element={<Signup />} />
+						<Route element={<RequireAuth />}>
+							<Route exact path='/' element={<Home />} />
+							<Route exact path='/addProduct' element={<AddProduct />} />
+						</Route>
+					</Routes>
+				</Grid>
+			</NavigationProvider>
 		</BrowserRouter>
 	);
 }

@@ -4,26 +4,26 @@ import { AppBar, Box, Button, IconButton, InputAdornment, Menu, MenuItem, TextFi
 import React, { useState } from 'react';
 import { navBarTheme, navigationStyles } from './styles';
 import { MoreVertOutlined } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { clearUser } from '../store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
+import useGlobalNavigate from '../hooks/useGlobalNavigate';
 
 const NavBar = () => {
 	const { toolBarStyle, grow, searchField, searchIcon } = navigationStyles();
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 	const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const navigate = useGlobalNavigate();
 
 	const handleOnSearch = () => {};
+
 	const handleOnNavigate = (route) => {
 		navigate(route);
 	};
 
 	const handleLogOut = () => {
 		dispatch(clearUser());
-		navigate('/');
 	};
 
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

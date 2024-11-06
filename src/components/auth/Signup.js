@@ -2,7 +2,6 @@ import { Avatar, Box, Button, Container, Grid2 as Grid, Link, ThemeProvider, Typ
 import React, { useState } from 'react';
 import { loginStyles, loginTheme } from '../../common/styles';
 import { LockOutlined } from '@mui/icons-material';
-import { useDispatch } from 'react-redux';
 import TextInput from '../../common/TextInput';
 import { CopyrightOutlined } from '@mui/icons-material';
 
@@ -18,7 +17,6 @@ const initialValues = {
 const Signup = () => {
 	const [formState, setFormState] = useState(initialValues);
 	const { loginForm, submitButton, footerStyle } = loginStyles();
-	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setFormState({ ...formState, [e.target.name]: e.target.value });

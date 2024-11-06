@@ -1,14 +1,13 @@
 import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, Grid2 as Grid, Link, ThemeProvider, Typography } from '@mui/material';
 import TextInput from '../../common/TextInput';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { loginTheme, loginStyles } from '../../common/styles';
 import './auth.css';
 import { CopyrightOutlined } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/reducers/userSlice';
 import { useSelector } from 'react-redux';
-import useGlobalNavigate from '../../hooks/useGlobalNavigate';
 
 const Login = () => {
 	const { loginForm, submitButton, footerStyle } = loginStyles();
@@ -16,19 +15,11 @@ const Login = () => {
 	const [password, setPassword] = React.useState('');
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-	const navigateTo = useGlobalNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(loginUser({ email, password }));
 	};
-
-	// Perform navigation once login is successful
-	useEffect(() => {
-		if (isLoggedIn) {
-			navigateTo('/');
-		}
-	}, [isLoggedIn, navigateTo]);
 
 	return (
 		<ThemeProvider theme={loginTheme}>
