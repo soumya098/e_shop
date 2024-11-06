@@ -84,9 +84,9 @@ const NavBar = () => {
 						/>
 					</Box>
 
-					<Box sx={{ display: { md: 'flex', xs: 'none' }, minWidth: '300px' }} flexDirection='row' justifyContent='space-between'>
+					<>
 						{isLoggedIn ? (
-							<>
+							<Box sx={{ display: { md: 'flex', xs: 'none' }, minWidth: '300px' }} flexDirection='row' justifyContent='space-between'>
 								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/')}>
 									Home
 								</Button>
@@ -100,19 +100,19 @@ const NavBar = () => {
 								<Button color='error' variant='contained' className='navigationBtn' onClick={() => handleLogOut()}>
 									logout
 								</Button>
-							</>
+							</Box>
 						) : (
-							<>
-								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/login')}>
+							<Box sx={{ display: { md: 'flex', xs: 'none' } }} flexDirection='row' gap={2} justifyContent='space-between'>
+								<Button variant='text' color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/login')}>
 									Login
 								</Button>
 
-								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/signup')}>
+								<Button variant='text' color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/signup')}>
 									Sign UP
 								</Button>
-							</>
+							</Box>
 						)}
-					</Box>
+					</>
 
 					<Box sx={{ display: { md: 'none', xs: 'flex' } }} justifySelf='flex-end'>
 						<IconButton aria-label='show more' aria-controls={mobileMenuId} aria-haspopup='true' onClick={handleMobileMenuOpen} color='inherit'>
