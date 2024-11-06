@@ -5,21 +5,31 @@ import React, { useState } from 'react';
 import { navBarTheme, navigationStyles } from './styles';
 import { MoreVertOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { clearUser } from '../store/reducers/userSlice';
+import { useDispatch } from 'react-redux';
 
 const NavBar = () => {
 	const { toolBarStyle, grow, searchField, searchIcon } = navigationStyles();
-	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
+	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+	const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleOnSearch = () => {};
 	const handleOnNavigate = (route) => {
 		navigate(route);
 	};
 
+	const handleLogOut = () => {
+		dispatch(clearUser());
+		navigate('/');
+	};
+
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 	const handleMobileMenuClose = () => {
-		setMobileMoreAnchorEl(false);
+		setMobileMoreAnchorEl(null);
 	};
 
 	const handleMobileMenuOpen = (event) => {
@@ -45,13 +55,13 @@ const NavBar = () => {
 	);
 	return (
 		<ThemeProvider theme={navBarTheme}>
-			<AppBar position='static'>
+			<AppBar position='sticky'>
 				<Toolbar className={toolBarStyle}>
-					<IconButton edge='start' color='inherit' aria-label='open drawer'>
+					<IconButton edge='start' color='inherit' aria-label='open drawer' onClick={() => handleOnNavigate('/')}>
 						<ShoppingCart />
 					</IconButton>
 
-					<Typography variant='h6' noWrap sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
+					<Typography variant='h6' noWrap sx={{ display: { xs: 'none', md: 'inline-block' } }}>
 						upGrad E-Shop
 					</Typography>
 
@@ -74,17 +84,37 @@ const NavBar = () => {
 						/>
 					</Box>
 
-					<Box sx={{ display: { sm: 'flex', xs: 'none' } }}>
-						<Button color='inherit' className='navigationBtn' onClick={handleOnNavigate('/login')}>
-							Login
-						</Button>
+					<Box sx={{ display: { md: 'flex', xs: 'none' }, minWidth: '300px' }} flexDirection='row' justifyContent='space-between'>
+						{isLoggedIn ? (
+							<>
+								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/')}>
+									Home
+								</Button>
 
-						<Button color='inherit' className='navigationBtn' onClick={handleOnNavigate('/signup')}>
-							Sign UP
-						</Button>
+								{isAdmin && (
+									<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/addProduct')}>
+										Add Product
+									</Button>
+								)}
+
+								<Button color='error' variant='contained' className='navigationBtn' onClick={() => handleLogOut()}>
+									logout
+								</Button>
+							</>
+						) : (
+							<>
+								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/login')}>
+									Login
+								</Button>
+
+								<Button color='inherit' className='navigationBtn' onClick={() => handleOnNavigate('/signup')}>
+									Sign UP
+								</Button>
+							</>
+						)}
 					</Box>
 
-					<Box sx={{ display: { sm: 'none', xs: 'flex' } }}>
+					<Box sx={{ display: { md: 'none', xs: 'flex' } }} justifySelf='flex-end'>
 						<IconButton aria-label='show more' aria-controls={mobileMenuId} aria-haspopup='true' onClick={handleMobileMenuOpen} color='inherit'>
 							<MoreVertOutlined />
 						</IconButton>

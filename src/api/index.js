@@ -33,8 +33,8 @@ API.interceptors.request.use(
 );
 
 // User authentication API
-export const signUp = async (data) => axios.post('/auth/signup', data);
-export const login = async (data) => axios.post('/auth/login', data);
+export const signUp = async (data) => API.post('/auth/signup', data);
+export const login = async (data) => API.post('/auth/signin', data);
 
 // User profile API
-export const getCurrUser = async (id) => axios.get(`/users/${id}`);
+export const fetchUserDetails = async (id) => API.get(`/users/${id}`);

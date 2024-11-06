@@ -1,11 +1,36 @@
 import { Grid2 as Grid } from '@mui/material';
 import './App.css';
 import NavBar from './common/NavBar';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
+import RequireAuth from './RequireAuth';
+import AddProduct from './components/product/AddProduct';
 
 function App() {
 	return (
-		<Grid container direction='column' height='100vh'>
-			<NavBar />
+		<BrowserRouter>
+			<Grid container direction='column'>
+				<NavBar />
+
+				<Routes>
+					<Route exact path='/login' element={<Login />} />
+					<Route exact path='/signup' element={<Signup />} />
+					<Route element={<RequireAuth />}>
+						<Route exact path='/' element={<Home />} />
+						<Route exact path='/addProduct' element={<AddProduct />} />
+					</Route>
+				</Routes>
+			</Grid>
+		</BrowserRouter>
+	);
+}
+
+export default App;
+
+const Home = () => {
+	return (
+		<>
 			<Grid>
 				<h1>Welcome to the E-Commerce Shop!</h1>
 			</Grid>
@@ -18,8 +43,6 @@ function App() {
 			<Grid>
 				<p>To add more features or customize the application, you can refer to the documentation and source code provided by Material-UI, React, and Redux Toolkit.</p>
 			</Grid>
-		</Grid>
+		</>
 	);
-}
-
-export default App;
+};

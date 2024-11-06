@@ -10,18 +10,47 @@ export const navBarTheme = createTheme({
 					backgroundColor: '#3f51b5'
 				}
 			}
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: '5px',
+					fontSize: '12px'
+				}
+			}
 		}
 	}
 });
 
-export const navigationStyles = makeStyles(({ theme }) => ({
+export const loginTheme = createTheme({
+	components: {
+		MuiTypography: {
+			styleOverrides: {
+				root: {
+					paddingBottom: '8px',
+					paddingTop: '8px'
+				}
+			}
+		},
+		MuiFormHelperText: {
+			styleOverrides: {
+				root: {
+					marginLeft: 0,
+					fontSize: '0.8em'
+				}
+			}
+		}
+	}
+});
+
+export const navigationStyles = makeStyles(() => ({
 	toolBarStyle: {
 		backgroundColor: '#3f51b5',
-		padding: '0 24px',
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		height: '65px'
+		height: '65px',
+		gap: 6
 	},
 	grow: {
 		flexGrow: 1,
@@ -34,7 +63,8 @@ export const navigationStyles = makeStyles(({ theme }) => ({
 		marginRight: '20px'
 	},
 	searchField: {
-		width: '50ch',
+		maxWidth: '40ch',
+		width: '100%',
 		borderRadius: '5px',
 		backgroundColor: alpha('#fff', 0.15),
 		'& .MuiInputBase-input': {
@@ -58,5 +88,30 @@ export const navigationStyles = makeStyles(({ theme }) => ({
 	},
 	searchIcon: {
 		color: 'white'
+	}
+}));
+
+export const loginStyles = makeStyles(() => ({
+	loginForm: {
+		marginTop: '10px',
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	submitButton: {
+		backgroundColor: '#3f51b5',
+		color: 'white',
+		'&:hover': {
+			backgroundColor: '#3f51b5'
+		}
+	},
+	footerStyle: {
+		marginTop: '20px !important',
+		color: 'lightslategrey',
+		display: 'flex',
+		alignItems: 'center',
+		gap: '6px'
 	}
 }));

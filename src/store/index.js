@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import rootReducer from './reducer';
+import rootReducer from './reducers';
 
 // Configure persist settings
 const persistConfig = {
@@ -15,7 +15,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Configure the store with persisted reducer and middleware
 const store = configureStore({
 	reducer: persistedReducer,
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE']
+			}
+		}),
 	devTools: process.env.NODE_ENV === 'development'
 });
 
