@@ -1,17 +1,22 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:9090/api';
+// const baseURL = 'http://localhost:9090/api';
+const baseURL = 'https://dev-project-ecommerce.upgrad.dev/api';
 
 const API = axios.create({ baseURL });
+
+const token =
+	'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBkZW1vLmNvbSIsImlhdCI6MTczMTAwNDY5MCwiZXhwIjoxNzMxMDEzMDkwfQ.sSt_wLrO0VTuezZ2FmyiuFODOsYQV-C2c523afmbFM-9EkBSw8jMoXTXE1trQQhNXdFrFvajBtU2Kd3fBqWF5g';
 
 // Interceptor for adding token to requests
 API.interceptors.request.use(
 	(req) => {
 		// Add token to request headers if it exists in local storage
-		const token = localStorage.getItem('token');
+		// const token = localStorage.getItem('token');
 		if (token) {
-			req.headers.Authorization = `Bearer ${token}`;
+			req.headers['x-auth-token'] = token;
 		}
+
 		return req;
 	},
 	(err) => {

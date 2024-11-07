@@ -7,6 +7,7 @@ import Signup from './components/auth/Signup';
 import RequireAuth from './RequireAuth';
 import AddProduct from './components/product/AddProduct';
 import { NavigationProvider } from './common/Navigation';
+import { Toaster } from 'sonner';
 
 function App() {
 	return (
@@ -14,6 +15,15 @@ function App() {
 			<NavigationProvider>
 				<Grid container direction='column'>
 					<NavBar />
+					<Toaster
+						visibleToasts={6}
+						position='top-right'
+						richColors
+						toastOptions={{
+							style: { marginTop: '25px', border: 'transparent', height: '60px' },
+							duration: 5000
+						}}
+					/>
 					<Routes>
 						<Route exact path='/login' element={<Login />} />
 						<Route exact path='/signup' element={<Signup />} />

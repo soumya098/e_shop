@@ -1,0 +1,14 @@
+.navigationBtn {
+	text-decoration: underline !important;
+}
+
+.logOutBtn {
+	background-color: #f33a6a !important;
+	text-decoration: none;
+	font-weight: 600;
+	color: white;
+}
+
+.sonner-action-btn {
+	background-color: transparent;
+}
