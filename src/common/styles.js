@@ -115,3 +115,27 @@ export const loginStyles = makeStyles(() => ({
 		gap: '6px'
 	}
 }));
+
+export const cardStyles = makeStyles(() => ({
+	cardContentStyle: {
+		paddingTop: '20px !important',
+		height: 100,
+		overflowY: 'auto'
+	},
+	productNameStyle: {
+		overflow: 'hidden',
+		display: '-webkit-box',
+		WebkitLineClamp: '2',
+		textOverflow: 'ellipsis',
+		WebkitBoxOrient: 'vertical'
+	},
+	productDescStyle: { fontStyle: 'italic' },
+	cardActions: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'flex-end'
+	},
+	buyBtnStyle: {
+		backgroundColor: '#3f51b5 !important'
+	}
+}));
