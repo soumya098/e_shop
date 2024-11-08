@@ -66,7 +66,6 @@ const userSlice = createSlice({
 					isAdmin: roles.includes('ADMIN'),
 					userDetails: data
 				});
-				console.log(state);
 				navigateTo('/');
 				showToast({
 					type: 'success',

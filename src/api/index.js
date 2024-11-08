@@ -43,3 +43,8 @@ export const login = async (data) => API.post('/auth/signin', data);
 
 // User profile API
 export const fetchUserDetails = async (id) => API.get(`/users/${id}`);
+
+// Product API
+export const fetchAllProducts = async () => API.get('/products');
+export const fetchProductDetails = async (id) => API.get(`/products/${id}`);
+export const fetchAllCategories = async () => API.get('/products/categories');
