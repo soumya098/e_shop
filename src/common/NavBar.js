@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { clearUser } from '../store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import useGlobalNavigate from '../hooks/useGlobalNavigate';
-import { showToast } from './Toast';
 
 const NavBar = () => {
 	const { toolBarStyle, grow, searchField, searchIcon } = navigationStyles();
@@ -20,7 +19,6 @@ const NavBar = () => {
 	const handleOnSearch = () => {};
 
 	const handleOnNavigate = (route) => {
-		showToast({ message: 'Redirecting.....' });
 		navigate(route);
 	};
 

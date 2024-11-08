@@ -9,8 +9,27 @@ import AddProduct from './components/product/AddProduct';
 import Home from './components/home/Home';
 import { NavigationProvider } from './common/Navigation';
 import { Toaster } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { clearUser } from './store/reducers/userSlice';
 
 function App() {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const handleStorageChange = (event) => {
+			if (event.key === 'persist:e_shop_root' && !event.newValue) {
+				dispatch(clearUser());
+			}
+		};
+
+		window.addEventListener('storage', handleStorageChange);
+
+		return () => {
+			window.removeEventListener('storage', handleStorageChange);
+		};
+	}, [dispatch]);
+
 	return (
 		<BrowserRouter>
 			<NavigationProvider>
