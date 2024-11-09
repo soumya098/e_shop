@@ -6,7 +6,7 @@ import Products from '../product/Products';
 const Home = () => {
 	return (
 		<Container maxWidth='xl'>
-			<Grid container spacing={2} justifyContent='center'>
+			<Grid container spacing={2} direction='column' justifyContent='center'>
 				<Categories />
 				<Products />
 			</Grid>

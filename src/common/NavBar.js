@@ -1,13 +1,16 @@
 import { SearchOutlined } from '@mui/icons-material';
 import { ShoppingCart } from '@mui/icons-material';
 import { AppBar, Box, Button, IconButton, InputAdornment, Menu, MenuItem, TextField, ThemeProvider, Toolbar, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { navBarTheme, navigationStyles } from './styles';
 import { MoreVertOutlined } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { clearUser } from '../store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import useGlobalNavigate from '../hooks/useGlobalNavigate';
+import useDebounce from '../hooks/useDebounce';
+import { filterProducts } from '../store/reducers/productSlice';
+import { setProductSearchedText } from '../store/reducers/filterSlice';
 
 const NavBar = () => {
 	const { toolBarStyle, grow, searchField, searchIcon } = navigationStyles();
@@ -15,8 +18,9 @@ const NavBar = () => {
 	const { isLoggedIn, isAdmin } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useGlobalNavigate();
-
-	const handleOnSearch = () => {};
+	const { category, searchedText } = useSelector((state) => state.filter.productFilter);
+	const [searchQuery, setSearchQuery] = useState(searchedText);
+	const debouncedQuery = useDebounce(searchQuery, 500);
 
 	const handleOnNavigate = (route) => {
 		navigate(route);
@@ -25,6 +29,14 @@ const NavBar = () => {
 	const handleLogOut = () => {
 		dispatch(clearUser());
 	};
+
+	useEffect(() => {
+		dispatch(setProductSearchedText(debouncedQuery));
+	}, [debouncedQuery, dispatch]);
+
+	useEffect(() => {
+		dispatch(filterProducts({ searchedText: debouncedQuery, category }));
+	}, [debouncedQuery, dispatch, category]);
 
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -35,6 +47,7 @@ const NavBar = () => {
 	const handleMobileMenuOpen = (event) => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
+
 	const mobileMenuId = 'menu-mobile';
 	const renderMobileMenu = (
 		<Menu
@@ -70,6 +83,7 @@ const NavBar = () => {
 							id='input-with-sx'
 							placeholder='Search...'
 							autoComplete='off'
+							value={searchQuery}
 							className={searchField}
 							slotProps={{
 								input: {
@@ -80,7 +94,7 @@ const NavBar = () => {
 									)
 								}
 							}}
-							onChange={handleOnSearch}
+							onChange={(e) => setSearchQuery(e.target.value)}
 						/>
 					</Box>
 

@@ -13,14 +13,13 @@ const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
-		setProductPriceRange: (state, action) => {
-			state.productFilter.priceRange = {
-				min: action.payload.min,
-				max: action.payload.max
-			};
+		clearFilters: (state) => {
+			Object.assign(state, initialState);
+		},
+		setProductSearchedText: (state, action) => {
+			state.productFilter.searchedText = action.payload;
 		},
 		setProductCategory: (state, { payload, type }) => {
-			console.log(type); // Returns 'filter/setProductCategory' which is the action type
 			state.productFilter.category = payload;
 		},
 		setProductSortOrder: (state, { payload }) => {
@@ -29,6 +28,6 @@ const filterSlice = createSlice({
 	}
 });
 
-export const { setProductCategory, setProductFilter, setProduct } = filterSlice.actions;
+export const { clearFilters, setProductCategory, setProductSearchedText } = filterSlice.actions;
 
 export default filterSlice.reducer;

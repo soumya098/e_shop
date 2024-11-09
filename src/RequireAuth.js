@@ -4,7 +4,6 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const RequireAuth = () => {
 	const { isLoggedIn } = useSelector((state) => state.user);
-	console.log(isLoggedIn);
 
 	return isLoggedIn ? <Outlet /> : <Navigate to='/login' replace />;
 };

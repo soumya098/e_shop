@@ -2,7 +2,7 @@ import { Grid2 as Grid, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../store/reducers/categorySlice';
-import { setProductCategory } from '../store/reducers/filterSlice';
+import { clearFilters, setProductCategory } from '../store/reducers/filterSlice';
 import { ALL } from '../constants';
 
 const Categories = () => {
@@ -14,18 +14,24 @@ const Categories = () => {
 
 	useEffect(() => {
 		dispatch(fetchCategories());
+		dispatch(clearFilters());
 	}, [dispatch]);
 
+	useEffect(() => {
+		setCategory(savedCategory || ALL);
+	}, [savedCategory]);
+
 	const handleCategoryChange = (event, newCategory) => {
-		setCategory(newCategory);
-		dispatch(setProductCategory(newCategory));
-		// Filter out Products
+		if (newCategory !== null) {
+			setCategory(newCategory);
+			dispatch(setProductCategory(newCategory));
+		}
 	};
 
 	return (
 		<Grid container justifyItems='center' justifyContent='center' paddingTop='24px' paddingBottom='24px'>
 			<ToggleButtonGroup value={category} exclusive onChange={handleCategoryChange}>
-				{['All', ...categories].map((cat) => (
+				{[ALL, ...categories].map((cat) => (
 					<ToggleButton value={cat} aria-label={cat} key={cat}>
 						{cat}
 					</ToggleButton>
