@@ -1,9 +1,14 @@
 import { Avatar, Box, Button, Container, Grid2 as Grid, Link, ThemeProvider, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { loginStyles, loginTheme } from '../../common/styles';
 import { LockOutlined } from '@mui/icons-material';
 import TextInput from '../../common/TextInput';
 import { CopyrightOutlined } from '@mui/icons-material';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as zod from 'zod';
+import { createUser } from '../../store/reducers/userSlice';
+import { useDispatch } from 'react-redux';
 
 const initialValues = {
 	firstName: '',
@@ -15,16 +20,41 @@ const initialValues = {
 };
 
 const Signup = () => {
-	const [formState, setFormState] = useState(initialValues);
 	const { loginForm, submitButton, footerStyle } = loginStyles();
+	const dispatch = useDispatch();
 
-	const handleChange = (e) => {
-		setFormState({ ...formState, [e.target.name]: e.target.value });
-	};
+	const signUpSchema = zod
+		.object({
+			firstName: zod.string().min(2).max(15),
+			lastName: zod.string().min(2).max(15),
+			email: zod.string().email(),
+			password: zod.string().min(8),
+			confirmPassword: zod.string().min(8),
+			contactNumber: zod.string().regex(/^\d{10}$/, { message: 'Mobile number must be exactly 10 digits' })
+		})
+		.superRefine(({ confirmPassword, password }, ctx) => {
+			if (confirmPassword !== password) {
+				ctx.addIssue({
+					code: 'INVALID_PASSWORD',
+					message: 'Passwords do not match',
+					path: ['confirmPassword']
+				});
+			}
+		});
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(formState);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm({
+		defaultValues: initialValues,
+		resolver: zodResolver(signUpSchema),
+		mode: 'all'
+	});
+
+	const handleFormSubmit = (values) => {
+		console.log(values);
+		dispatch(createUser(values));
 	};
 
 	return (
@@ -35,14 +65,27 @@ const Signup = () => {
 						<LockOutlined />
 					</Avatar>
 					<Typography variant='h5'>Sign Up</Typography>
-					<form onSubmit={handleSubmit} className={loginForm}>
+					<form onSubmit={handleSubmit(handleFormSubmit)} className={loginForm}>
 						<Grid container spacing={3} direction='column' width='100%'>
-							<TextInput label='First Name *' name='firstName' type='text' value={formState.firstName} handleChange={(e) => handleChange(e)} />
-							<TextInput label='Last Name *' name='lastName' type='text' value={formState.lastName} handleChange={(e) => handleChange(e)} />
-							<TextInput label='Email Address *' name='email' type='email' value={formState.email} handleChange={(e) => handleChange(e)} />
-							<TextInput label='Password *' name='password' type='password' value={formState.password} handleChange={(e) => handleChange(e)} />
-							<TextInput label='Confirm Password *' name='confirmPassword' type='password' value={formState.confirmPassword} handleChange={(e) => handleChange(e)} />
-							<TextInput label='Contact Number *' name='contactNumber' type='contactNumber' value={formState.contactNumber} handleChange={(e) => handleChange(e)} />
+							<TextInput label='First Name *' type='text' {...register('firstName')} error={!!errors.firstName} helperText={errors.firstName?.message} />
+							<TextInput label='Last Name *' type='text' {...register('lastName')} error={!!errors.lastName} helperText={errors.lastName?.message} />
+							<TextInput label='Email Address *' type='email' {...register('email')} error={!!errors.email} helperText={errors.email?.message} />
+							<TextInput label='Password *' type='password' {...register('password')} error={!!errors.password} helperText={errors.password?.message} />
+							<TextInput
+								label='Confirm Password *'
+								type='password'
+								{...register('confirmPassword')}
+								error={!!errors.confirmPassword}
+								helperText={errors.confirmPassword?.message}
+							/>
+							<TextInput
+								label='Contact Number *'
+								name='contactNumber'
+								type='contactNumber'
+								{...register('contactNumber')}
+								error={!!errors.contactNumber}
+								helperText={errors.contactNumber?.message}
+							/>
 						</Grid>
 						<Button type='submit' fullWidth variant='contained' size='small' id='signInBtn' className={submitButton}>
 							Sign Up

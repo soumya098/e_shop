@@ -26,10 +26,12 @@ export const loginUser = createAsyncThunk('user/login', async ({ email, password
 	}
 });
 
-export const createUser = createAsyncThunk('user/signup', async (data, { rejectWithValue }) => {
+export const createUser = createAsyncThunk('user/signup', async (values, { rejectWithValue }) => {
 	try {
-		await api.signUp(data);
-		return 'User created successfully!';
+		const { data } = await api.signUp(values);
+		//data:  {message: 'User registered successfully!'}
+
+		return 'User registered successfully!';
 	} catch (error) {
 		return rejectWithValue(error.response?.data || 'An error occurred!');
 	}
@@ -75,7 +77,20 @@ const userSlice = createSlice({
 			.addCase(loginUser.rejected, (state, { payload }) => {
 				state.loading = false;
 				state.error = payload;
+				state.isLoggedIn = true;
 			});
+
+		builder
+			.addCase(createUser.pending, (state, { payload }) => {})
+			.addCase(createUser.fulfilled, (state, { payload }) => {
+				showToast({
+					type: 'success',
+					message: payload
+				});
+				navigateTo('/login');
+				state.loading = false;
+			})
+			.addCase(createUser.rejected, (state, { payload }) => {});
 	}
 });
 

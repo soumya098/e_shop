@@ -7,18 +7,31 @@ import './auth.css';
 import { CopyrightOutlined } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/reducers/userSlice';
-import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as zod from 'zod';
 
 const Login = () => {
 	const { loginForm, submitButton, footerStyle } = loginStyles();
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const { isLoggedIn } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		dispatch(loginUser({ email, password }));
+	const loginValidator = zod.object({
+		email: zod.string().min(1, { message: 'Email Required' }).email({ message: 'Invalid Email Address' }),
+		password: zod.string().min(1, { message: 'Password Required' })
+	});
+
+	const {
+		register,
+		formState: { errors },
+		handleSubmit
+	} = useForm({
+		defaultValues: { email: '', password: '' },
+		resolver: zodResolver(loginValidator),
+		mode: 'all'
+	});
+
+	const handleFormSubmit = (values) => {
+		dispatch(loginUser(values));
 	};
 
 	return (
@@ -29,10 +42,10 @@ const Login = () => {
 						<LockOutlined />
 					</Avatar>
 					<Typography variant='h5'>Sign In</Typography>
-					<form onSubmit={handleSubmit} className={loginForm}>
+					<form onSubmit={handleSubmit(handleFormSubmit)} className={loginForm}>
 						<Grid container spacing={3} direction='column' width='100%'>
-							<TextInput label='Email Address *' name='email' type='email' value={email} handleChange={(e) => setEmail(e.target.value)} error='' />
-							<TextInput label='Password *' name='password' type='password' value={password} handleChange={(e) => setPassword(e.target.value)} />
+							<TextInput label='Email Address *' type='email' {...register('email')} error={!!errors.email} helperText={errors.email?.message} />
+							<TextInput label='Password *' type='password' {...register('password')} error={!!errors.password} helperText={errors.password?.message} />
 						</Grid>
 						<Button type='submit' fullWidth variant='contained' size='small' id='signInBtn' className={submitButton}>
 							Sign in

@@ -1,12 +1,14 @@
 import { Grid2 as Grid, TextField } from '@mui/material';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-const TextInput = ({ label, name, value, type, handleChange, error }) => {
+const TextInput = forwardRef(({ label, type, error, helperText, ...props }, ref) => {
 	return (
 		<Grid xs={12} sm={12}>
-			<TextField variant='outlined' label={label} value={value} name={name} type={type} onChange={handleChange} helperText={error} error={Boolean(error)} fullWidth></TextField>
+			<TextField variant='outlined' label={label} type={type} helperText={helperText} error={error} fullWidth {...props} inputRef={ref}></TextField>
 		</Grid>
 	);
-};
+});
+
+TextInput.displayName = 'TextInput';
 
 export default TextInput;
