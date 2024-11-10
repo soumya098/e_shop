@@ -12,6 +12,8 @@ import { Toaster } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { clearUser } from './store/reducers/userSlice';
+import ProductDetail from './components/product/ProductDetail';
+import Order from './components/product/Order';
 
 function App() {
 	const dispatch = useDispatch();
@@ -50,6 +52,8 @@ function App() {
 						<Route element={<RequireAuth />}>
 							<Route exact path='/' element={<Home />} />
 							<Route exact path='/addProduct' element={<AddProduct />} />
+							<Route path='/productDetail/:id' exact element={<ProductDetail />} />
+							<Route path='/orderProduct' exact element={<Order />} />
 						</Route>
 					</Routes>
 				</Grid>

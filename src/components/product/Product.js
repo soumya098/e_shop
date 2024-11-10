@@ -3,10 +3,17 @@ import React from 'react';
 import { cardStyles } from '../../common/styles';
 import { CurrencyRupeeOutlined, Delete, ModeEdit } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
+import useGlobalNavigate from '../../hooks/useGlobalNavigate';
 
 const Product = ({ id, name, category, price, description, manufacturer, imageUrl, availableItems }) => {
 	const { isAdmin } = useSelector((state) => state.user);
 	const { cardContentStyle, productNameStyle, productDescStyle, cardActions, buyBtnStyle } = cardStyles();
+	const navigate = useGlobalNavigate();
+
+	const handleOnNavigate = (path) => {
+		navigate(path);
+	};
+
 	return (
 		<Card elevation={6} sx={{ width: 360, height: 550 }}>
 			<CardMedia component='img' height='360' image={imageUrl} alt={name} />
@@ -25,7 +32,7 @@ const Product = ({ id, name, category, price, description, manufacturer, imageUr
 			</CardContent>
 			<CardActions className={cardActions}>
 				<Grid justifyContent='flex-end'>
-					<Button size='small' variant='contained' className={buyBtnStyle} onClick={() => {}}>
+					<Button size='small' variant='contained' className={buyBtnStyle} onClick={() => handleOnNavigate(`/productDetail/${id}`)}>
 						Buy
 					</Button>
 				</Grid>

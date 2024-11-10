@@ -139,3 +139,48 @@ export const cardStyles = makeStyles(() => ({
 		backgroundColor: '#3f51b5 !important'
 	}
 }));
+
+export const productStyles = makeStyles(() => ({
+	footerStyle: {
+		color: 'lightslategrey',
+		display: 'flex',
+		alignItems: 'center',
+		gap: '6px',
+		paddingTop: '24px'
+	},
+	shoppingCartIcon: {
+		borderRadius: '50%',
+		backgroundColor: '#F33A6A',
+		padding: '12px',
+		color: 'white'
+	},
+	quantityField: {
+		width: '30%',
+		marginTop: 2
+	},
+	deleteConfirmation: {
+		'& .MuiDialog-paper': { width: '30%', maxHeight: 460, height: 200 }
+	},
+	productNameStyle: {
+		overflow: 'hidden',
+		display: '-webkit-box',
+		WebkitLineClamp: '2',
+		textOverflow: 'ellipsis',
+		WebkitBoxOrient: 'vertical'
+	},
+	productDescStyle: {
+		fontStyle: 'italic'
+	},
+	cardActions: {
+		display: 'flex',
+		flexDirection: 'row'
+	},
+	buyBtnStyle: {
+		backgroundColor: '#3f51b5 !important'
+	},
+	imgStyle: {
+		maxHeight: '400px',
+		width: '90%',
+		objectFit: 'cover'
+	}
+}));

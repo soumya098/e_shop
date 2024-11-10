@@ -46,5 +46,5 @@ export const fetchUserDetails = async (id) => API.get(`/users/${id}`);
 
 // Product API
 export const fetchAllProducts = async () => API.get('/products');
-export const fetchProductDetails = async (id) => API.get(`/products/${id}`);
+export const fetchProductById = async (id) => API.get(`/products/${id}`);
 export const fetchAllCategories = async () => API.get('/products/categories');
