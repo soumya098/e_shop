@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../../api';
+import { showToast } from '../../common/Toast';
 
 const initialState = {
 	categories: []
@@ -30,6 +31,7 @@ const categorySlice = createSlice({
 			})
 			.addCase(fetchCategories.rejected, (state, { payload }) => {
 				console.log('Error: ', payload);
+				showToast({ type: 'error', message: 'Error fetching categories' });
 			});
 	}
 });

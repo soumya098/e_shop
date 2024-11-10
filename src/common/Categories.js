@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../store/reducers/categorySlice';
 import { clearFilters, setProductCategory } from '../store/reducers/filterSlice';
 import { ALL } from '../constants';
+import useSyncStateWithBroadcastChannel from '../hooks/useSyncStateWithBroadcastChannel';
 
 const Categories = () => {
 	const { categories } = useSelector((state) => state.category);
 	const { category: savedCategory } = useSelector((state) => state.filter.productFilter);
-
 	const [category, setCategory] = useState(savedCategory || ALL);
 	const dispatch = useDispatch();
+	const syncCategoryAcrossTabs = useSyncStateWithBroadcastChannel('categorySyncChannel');
 
 	useEffect(() => {
 		dispatch(fetchCategories());
@@ -25,6 +26,7 @@ const Categories = () => {
 		if (newCategory !== null) {
 			setCategory(newCategory);
 			dispatch(setProductCategory(newCategory));
+			syncCategoryAcrossTabs(newCategory); // Send to other tabs
 		}
 	};
 
