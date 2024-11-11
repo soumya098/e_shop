@@ -18,7 +18,7 @@ const Products = () => {
 	}, [dispatch, category, searchedText]);
 
 	return (
-		<Grid container spacing={8} rowSpacing={6} paddingBottom={10} justifyContent='center'>
+		<Grid container spacing={4} rowSpacing={8} paddingBottom={10} justifyContent='center'>
 			{filteredProducts.length > 0 ? (
 				filteredProducts.map((product) => (
 					<Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }} display='flex' justifyContent='center'>

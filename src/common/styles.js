@@ -161,26 +161,53 @@ export const productStyles = makeStyles(() => ({
 	deleteConfirmation: {
 		'& .MuiDialog-paper': { width: '30%', maxHeight: 460, height: 200 }
 	},
-	productNameStyle: {
-		overflow: 'hidden',
-		display: '-webkit-box',
-		WebkitLineClamp: '2',
-		textOverflow: 'ellipsis',
-		WebkitBoxOrient: 'vertical'
-	},
-	productDescStyle: {
-		fontStyle: 'italic'
-	},
-	cardActions: {
-		display: 'flex',
-		flexDirection: 'row'
-	},
-	buyBtnStyle: {
-		backgroundColor: '#3f51b5 !important'
-	},
 	imgStyle: {
 		maxHeight: '400px',
 		width: '90%',
 		objectFit: 'cover'
 	}
+}));
+
+export const addressStyles = makeStyles({
+	labelStyle: {
+		width: '40%',
+		fontSize: 'medium !important',
+		color: 'black !important'
+	}
+});
+
+export const orderStyles = makeStyles(() => ({
+	stepperContainer: {
+		margin: '4% auto',
+		marginBottom: 0
+	},
+	backButton: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		gap: '16px',
+		marginBottom: '4%'
+	},
+	stepperLabelStyle: { pointerEvents: 'none' },
+	cardStyle: {
+		flex: 1,
+		display: 'flex',
+		margin: '0 8.5% 0 8.5%'
+	},
+	productDetailContainer: { display: 'flex', flexDirection: 'column', flex: 1 },
+	cardContentStyle: {
+		flex: '1 0 auto',
+		display: 'flex',
+		flexDirection: 'column',
+		gap: 20,
+		padding: '48px 24px !important'
+	},
+	prodDescStyle: { color: 'text.secondary', fontStyle: 'italic' },
+	addressContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		borderLeft: '1.5px solid lightgrey',
+		flex: 0.5
+	},
+	addressCardStyle: { display: 'flex', flexDirection: 'column', gap: 6, padding: '48px 24px !important' }
 }));

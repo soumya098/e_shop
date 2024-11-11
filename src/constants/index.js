@@ -10,3 +10,5 @@ export const OPTIONS = [
 	{ label: 'Price: Low to High', value: LOW_TO_HIGH },
 	{ label: 'Newest', value: NEWEST }
 ];
+
+export const STEP_OPTIONS = ['Items', 'Select Address', 'Confirm Order'];

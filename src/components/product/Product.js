@@ -15,7 +15,7 @@ const Product = ({ id, name, category, price, description, manufacturer, imageUr
 	};
 
 	return (
-		<Card elevation={6} sx={{ width: 360, height: 550 }}>
+		<Card elevation={6} sx={{ width: 380, height: 550 }}>
 			<CardMedia component='img' height='360' image={imageUrl} alt={name} />
 			<CardContent className={cardContentStyle}>
 				<Grid container display='flex' flexDirection='row' justifyContent='space-between' spacing={2}>

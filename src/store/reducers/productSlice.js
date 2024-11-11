@@ -5,7 +5,8 @@ import { ALL } from '../../constants';
 const initialState = {
 	products: [],
 	filteredProducts: [],
-	selectedProduct: {}
+	selectedProduct: {},
+	isLoading: false
 };
 
 export const fetchProducts = createAsyncThunk('product/fetchProducts', async (_, { rejectWithValue }) => {
@@ -18,7 +19,7 @@ export const fetchProducts = createAsyncThunk('product/fetchProducts', async (_,
 	}
 });
 
-export const fetchProductById = createAsyncThunk('product/fetchProductById', async (id, { rejectWithValue }) => {
+export const fetchProductById = createAsyncThunk('product/fetchProductById', async (id, { rejectWithValue, dispatch }) => {
 	try {
 		const { data } = await api.fetchProductById(id);
 		return data;
@@ -59,11 +60,17 @@ const productSlice = createSlice({
 			});
 
 		builder
-			.addCase(fetchProductById.pending, (state, { payload }) => {})
+			.addCase(fetchProductById.pending, (state, { payload }) => {
+				state.isLoading = true;
+			})
 			.addCase(fetchProductById.fulfilled, (state, { payload }) => {
 				state.selectedProduct = { ...payload, quantity: 1 };
+				state.isLoading = false;
 			})
-			.addCase(fetchProductById.rejected, (state, action) => {});
+			.addCase(fetchProductById.rejected, (state, action) => {
+				state.isLoading = false;
+				console.log(action);
+			});
 
 		builder
 			.addCase(deleteProduct.pending, (state, { payload }) => {})

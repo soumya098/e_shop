@@ -9,7 +9,7 @@ import useGlobalNavigate from '../../hooks/useGlobalNavigate';
 
 const ProductInfo = ({ id }) => {
 	const dispatch = useDispatch();
-	const productDetail = useSelector((state) => state.product.selectedProduct);
+	const { selectedProduct: productDetail, isLoading } = useSelector((state) => state.product);
 	const { imgStyle, quantityField } = productStyles();
 	const navigate = useGlobalNavigate();
 
@@ -25,13 +25,13 @@ const ProductInfo = ({ id }) => {
 
 	return (
 		<>
-			<Grid container columnSpacing={2} rowSpacing={2} paddingBottom={10} justifyContent='center' marginTop={6}>
-				{productDetail && (
+			<Grid container columnSpacing={20} rowSpacing={2} paddingBottom={10} justifyContent='center' marginTop={6}>
+				{!isLoading && productDetail && (
 					<>
-						<Grid size={{ xs: 12, md: 4 }} padding={2}>
+						<Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', justifyContent: { md: 'flex-start', xs: 'center' } }}>
 							<img src={productDetail.imageUrl} alt={productDetail.name} loading='lazy' className={imgStyle} />
 						</Grid>
-						<Grid size={{ xs: 12, md: 6 }} padding={2} flex={1}>
+						<Grid size={{ xs: 12, md: 6 }} flex={1}>
 							<Grid display='flex' justifyContent='flex-start' flexDirection='row' alignItems='center' container gap={2}>
 								<Typography variant='h4' className='productName'>
 									{productDetail.name}
