@@ -6,7 +6,7 @@ const baseURL = 'https://dev-project-ecommerce.upgrad.dev/api';
 const API = axios.create({ baseURL });
 
 const token =
-	'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBkZW1vLmNvbSIsImlhdCI6MTczMTAwNDY5MCwiZXhwIjoxNzMxMDEzMDkwfQ.sSt_wLrO0VTuezZ2FmyiuFODOsYQV-C2c523afmbFM-9EkBSw8jMoXTXE1trQQhNXdFrFvajBtU2Kd3fBqWF5g';
+	'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBkZW1vLmNvbSIsImlhdCI6MTczMTMzNTI2NSwiZXhwIjoxNzMxMzQzNjY1fQ.3fmzh9mTwuiZYgOhfRT4AdTdOnZrF8a1LK0IdpoZ9bnBdV4Byz0kr_NIOYyHEbJAbR8aJBWyCI9MpCqeoGKsMA';
 
 // Interceptor for adding token to requests
 API.interceptors.request.use(
@@ -48,3 +48,8 @@ export const fetchUserDetails = async (id) => API.get(`/users/${id}`);
 export const fetchAllProducts = async () => API.get('/products');
 export const fetchProductById = async (id) => API.get(`/products/${id}`);
 export const fetchAllCategories = async () => API.get('/products/categories');
+export const upgradeProduct = async (id, data) => API.put(`/products/${id}`, data);
+export const deleteProduct = async (id, data) => API.delete(`/products/${id}`);
+
+// Addess API
+export const fetchAllAddress = async () => API.get('/addresses');

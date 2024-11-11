@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { clearUser } from './store/reducers/userSlice';
 import ProductDetail from './components/product/ProductDetail';
-import Order from './components/product/Order';
+import Order from './components/order/Order';
 
 function App() {
 	const dispatch = useDispatch();

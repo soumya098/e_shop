@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { STEP_OPTIONS } from '../../constants';
 import { orderStyles } from '../../common/styles';
 import Address from '../address/Address';
-import ConfirmOrder from '../order/ConfirmOrder';
-import ProductInfo from './ProductInfo';
+import ConfirmOrder from './ConfirmOrder';
+import ProductInfo from '../product/ProductInfo';
 import { useSelector } from 'react-redux';
 
 const Order = () => {
